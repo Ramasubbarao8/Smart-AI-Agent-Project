@@ -8,16 +8,18 @@ import "./index.css";
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-if (!googleClientId) {
-  console.warn("VITE_GOOGLE_CLIENT_ID is missing. Google login will not work.");
-}
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={googleClientId || "missing-client-id"}>
+    {googleClientId ? (
+      <GoogleOAuthProvider clientId={googleClientId}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </GoogleOAuthProvider>
+    ) : (
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </GoogleOAuthProvider>
+    )}
   </React.StrictMode>
 );
